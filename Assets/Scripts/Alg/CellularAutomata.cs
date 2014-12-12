@@ -6,8 +6,8 @@ public class CellularAutomata : System.Object
 	int TRUE=1;
 	int FALSE=0;
 	
-	int width = 256;
-	int height = 16;
+	int width = 64;
+	int height = 64;
 	
 	int[][] cellmap;
 	
