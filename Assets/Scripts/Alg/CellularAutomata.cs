@@ -164,4 +164,20 @@ public class CellularAutomata : System.Object
 			}
 		}
 	}
+
+	public void zeroLimits(int[,] map)
+	{
+
+		for (int y = 0; y < height; y++)
+		{
+			map[0,y]=0;
+			map[width-1,y]=0;
+		}
+
+		for (int x = 0; x < width; x++)
+		{
+			map[x,0]=0;
+			map[x,height-1]=0;
+		}
+	}
 }
