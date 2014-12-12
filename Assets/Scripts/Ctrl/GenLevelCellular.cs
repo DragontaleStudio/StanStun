@@ -19,7 +19,7 @@ public class GenLevelCellular : MonoBehaviour
 	{
 		if (Input.GetMouseButtonUp(0))
 		{
-			createLevel();
+			//createLevel();
 		}
 	}
 
@@ -70,7 +70,7 @@ public class GenLevelCellular : MonoBehaviour
 					go=(GameObject)GameObject.Instantiate(floor[Random.Range(0,floor.Length-1)]);
 				}
 				go.transform.parent=gameObject.transform;
-				go.transform.localPosition=new Vector3(x,0,y);
+				go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1	)/2);
 
 			}
 		}
