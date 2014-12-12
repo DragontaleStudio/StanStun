@@ -12,6 +12,11 @@ public class CtrlUiManager : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{ 
+			goBack();
+		}
+
 		if (model != null)
 		{
 			if (model.stunnedFor > 0)
@@ -44,6 +49,8 @@ public class CtrlUiManager : MonoBehaviour
 
 	void onGotStunned()
 	{
+		model.stunnedFor = 3.0f;
+
 		resources.text = "Resources: " + model.carryResources.ToString();
 		stunned.text = "Stunned for: " + model.stunnedFor.ToString();
 		stunn.SetActive(false);
@@ -54,8 +61,21 @@ public class CtrlUiManager : MonoBehaviour
 		resources.text = model.carryResources.ToString();
 	}
 
+	private void goBack()
+	{	
+		Application.Quit();
+		//		if (!isPaused)
+		//		{
+		//			pauseGame();
+		//		}else if (isPaused)
+		//		{
+		//			resumeGame();
+		//		}
+	}
+
+	//XXX: TEST
 	public void stunnMe()
 	{
-		model.stunnedFor = 3.0f;
+		EventManager.onGotStunned();
 	}
 }
