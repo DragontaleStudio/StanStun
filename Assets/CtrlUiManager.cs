@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class CtrlUiManager : MonoBehaviour 
 {
 	public Player model;
-	public NetworkManager nm;
 
 	public Text resources;
 	public Text stunned;
@@ -57,6 +56,6 @@ public class CtrlUiManager : MonoBehaviour
 
 	public void stunnMe()
 	{
-		nm.playerPrefab.GetComponent<CtrlPlayer>().model.stunnedFor = 3.0f;
+		model.stunnedFor = 3.0f;
 	}
 }
