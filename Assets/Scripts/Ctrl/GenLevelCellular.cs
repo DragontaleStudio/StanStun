@@ -36,8 +36,8 @@ public class GenLevelCellular : MonoBehaviour
 		CellularAutomata ca=new CellularAutomata(32,32);
 
 		int[,] map= ca.generateMap();
-		ca.simplePlaceTreasure(map,6);
-		ca.simplePlaceObject(map,.2f);
+//		ca.simplePlaceTreasure(map,6);
+//		ca.simplePlaceObject(map,.2f);
 
 		for (int x = 0; x < map.GetLength(0); x++)
 		{
