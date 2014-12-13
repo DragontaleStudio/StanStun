@@ -30,6 +30,16 @@ public class NetworkManager : MonoBehaviour
 		SpawnPlayer();
 	}
 
+	void OnPlayerConnected()
+	{
+		Debug.Log("Client connected");
+		GameObject world=GameObject.Find("World");
+		for (int i=0;i<world.transform.childCount;i++)
+		{
+			world.transform.GetChild(i).GetComponent<GenLevelCellular>().newMapGenerated();
+		}
+	}
+
 	void OnMasterServerEvent(MasterServerEvent msEvent)
 	{
 		if (msEvent == MasterServerEvent.HostListReceived)
@@ -42,6 +52,7 @@ public class NetworkManager : MonoBehaviour
 	{
 		Debug.Log("Server Joined");
 		SpawnPlayer();
+
 	}
 
 	void OnGUI()
