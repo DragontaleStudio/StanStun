@@ -37,7 +37,9 @@ public class GenLevelCellular : MonoBehaviour
 //		changeMap(map);
 //		changeMapStr("dssdds");
 
-		networkView.RPC("changeMapStr", RPCMode.OthersBuffered, stringify());
+		byte[] mmm=ZipUtil.Zip(stringify());
+		Debug.Log("map str lenght:"+mmm.Length);
+		networkView.RPC("changeMapStr", RPCMode.OthersBuffered, mmm);
 	}
 	
 //	[RPC] void changeMap(int[,] mapRef)
@@ -48,8 +50,9 @@ public class GenLevelCellular : MonoBehaviour
 //		}
 //	}
 
-	[RPC] void changeMapStr(string mapRef)
+	[RPC] void changeMapStr(byte [] strbytes)
 	{
+		string mapRef=ZipUtil.Unzip(strbytes);
 		if (Network.isClient)
 		{
 			destringify(mapRef);
@@ -91,10 +94,11 @@ public class GenLevelCellular : MonoBehaviour
 		}
 	}
 
-	// Update is called once per frame
-	void Update () 
-	{
-		if (!created && Network.isServer)
+
+		// Update is called once per frame
+		void Update () 
+		{
+			if (!created && Network.isServer)
 		{
 			createLevel(true);
 			created=true;
