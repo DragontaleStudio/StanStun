@@ -48,11 +48,12 @@ public class GenLevelCellular : MonoBehaviour
 
 	[RPC] void changeMapStr(string mapRef)
 	{
-		destringify(mapRef);
-		createLevel(false);
+
 
 		if (networkView.isMine)
 		{
+			destringify(mapRef);
+			createLevel(false);
 			networkView.RPC("changeMap", RPCMode.OthersBuffered, mapRef);
 		}
 	}
