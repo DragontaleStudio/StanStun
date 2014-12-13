@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class GenLevelCellular : MonoBehaviour 
 {
+	[System.Serializable]
+	public class CMap
+	{
+		public int[] sermap;
+	}
+
 	public GameObject[] floor;
 	public GameObject[] wall;
 	public GameObject[] treasure;
@@ -12,7 +18,7 @@ public class GenLevelCellular : MonoBehaviour
 
 	public Material floorMaterial;
 //	public List<int[,]> maps=new List<int[,]>();
-
+	
 	public int[,] map;
 
 	bool created=false;
@@ -22,13 +28,31 @@ public class GenLevelCellular : MonoBehaviour
 	{
 	
 	}
-	
+
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
+	{
+		CMap mapRef=new CMap();
+//		mapRef.sermap=map;
+
+		if (stream.isWriting)
+		{
+			stream.Serialize(ref mapRef);
+		}
+		else
+		{
+			stream.Serialize(ref mapRef);
+//			map=mapRef.map;
+			createLevel(false);
+			created=true;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
 		if (!created && Network.isServer)
 		{
-			createLevel();
+			createLevel(true);
 			created=true;
 		}
 
@@ -38,7 +62,7 @@ public class GenLevelCellular : MonoBehaviour
 		}
 	}
 
-	public void createLevel()
+	public void createLevel(bool generateNew)
 	{
 //		int childs = transform.childCount;
 //		for (int i = 0; i > childs; i++	)
@@ -46,14 +70,18 @@ public class GenLevelCellular : MonoBehaviour
 //			GameObject theFloor=transform.GetChild(i).gameObject;
 			GameObject theFloor=gameObject;
 
-			CellularAutomata ca=new CellularAutomata(32,32);
+			if (generateNew)
+			{
+				CellularAutomata ca=new CellularAutomata(32,32);
 			
-			map= ca.generateMap();
-			ca.simplePlaceTreasure(map,6);
-			ca.zeroLimits(map);
-			ca.placeBase(map);
+				map= ca.generateMap();
+				ca.simplePlaceTreasure(map,6);
+				ca.zeroLimits(map);
+				ca.placeBase(map);
+				ca.simplePlaceObject(map,.2f);
+			}
 
-			//		ca.simplePlaceObject(map,.2f);
+
 			
 			for (int x = 0; x < map.GetLength(0); x++)
 			{
@@ -77,8 +105,8 @@ public class GenLevelCellular : MonoBehaviour
 //						go.transform.parent=theFloor.transform;
 //						go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
 //						go.transform.localRotation=Quaternion.identity;
-
-						go=(GameObject)GameObject.Instantiate(treasure[Random.Range(0,treasure.Length-1)]);
+						if (debris!=null && debris.Length>0)
+							go=(GameObject)GameObject.Instantiate(treasure[Random.Range(0,treasure.Length-1)]);
 					}
 					
 					else if (map[x,y]==3) 
