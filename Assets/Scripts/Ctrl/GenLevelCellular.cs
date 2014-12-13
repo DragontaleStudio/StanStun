@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GenLevelCellular : MonoBehaviour 
 {
@@ -8,6 +9,10 @@ public class GenLevelCellular : MonoBehaviour
 	public GameObject[] treasure;
 	public GameObject[] debris;
 
+//	public List<int[,]> maps=new List<int[,]>();
+
+	public int[,] map;
+		 
 	// Use this for initialization
 	void Start () 
 	{
@@ -25,14 +30,15 @@ public class GenLevelCellular : MonoBehaviour
 
 	public void createLevel()
 	{
-		int childs = transform.childCount;
-		for (int i = 0; i < childs; i++	)
+//		int childs = transform.childCount;
+//		for (int i = 0; i > childs; i++	)
 		{
-			GameObject theFloor=transform.GetChild(i).gameObject;
+//			GameObject theFloor=transform.GetChild(i).gameObject;
+			GameObject theFloor=gameObject;
 
 			CellularAutomata ca=new CellularAutomata(32,32);
 			
-			int[,] map= ca.generateMap();
+			map= ca.generateMap();
 			ca.simplePlaceTreasure(map,6);
 			ca.zeroLimits(map);
 			//		ca.simplePlaceObject(map,.2f);
@@ -52,26 +58,28 @@ public class GenLevelCellular : MonoBehaviour
 					}
 					else if (map[x,y]==2) 
 					{
-						go=(GameObject)GameObject.Instantiate(treasure[Random.Range(0,treasure.Length-1)]);
+						go=(GameObject)GameObject.Instantiate(floor[Random.Range(0,floor.Length-1)]);
 						go.transform.parent=theFloor.transform;
 						go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
-						
-						go=(GameObject)GameObject.Instantiate(floor[Random.Range(0,floor.Length-1)]);
+						go.transform.localRotation=Quaternion.identity;
+
+						go=(GameObject)GameObject.Instantiate(treasure[Random.Range(0,treasure.Length-1)]);
 					}
 					
 					else if (map[x,y]==3) 
 					{
-						go=(GameObject)GameObject.Instantiate(debris[Random.Range(0,debris.Length-1)]);
+						go=(GameObject)GameObject.Instantiate(floor[Random.Range(0,floor.Length-1)]);
 						go.transform.parent=theFloor.transform;
 						go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
-						
-						go=(GameObject)GameObject.Instantiate(floor[Random.Range(0,floor.Length-1)]);
+						go.transform.localRotation=Quaternion.identity;
+
+						go=(GameObject)GameObject.Instantiate(debris[Random.Range(0,debris.Length-1)]);
 					}
 
 					go.transform.parent=theFloor.transform;
 					go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
 					go.transform.localRotation=Quaternion.identity;
-					
+					go.name="LVL"+x+","+y;
 				}
 			}
 
