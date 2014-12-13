@@ -28,14 +28,10 @@ public class GenLevelCellular : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		if (!created && Network.isServer)
-		{
-			createLevel(true);
-			created=true;
-		}
+	
 	}
 
-	private void newMapGenerated()
+	public void newMapGenerated()
 	{
 		changeMap(map);
 	}
@@ -52,7 +48,11 @@ public class GenLevelCellular : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-
+		if (!created && Network.isServer)
+		{
+			createLevel(true);
+			created=true;
+		}
 		if (Input.GetMouseButtonUp(0))
 		{
 			//createLevel();
@@ -102,7 +102,7 @@ public class GenLevelCellular : MonoBehaviour
 //						go.transform.parent=theFloor.transform;
 //						go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
 //						go.transform.localRotation=Quaternion.identity;
-						if (debris!=null && debris.Length>0)
+
 							go=(GameObject)GameObject.Instantiate(treasure[Random.Range(0,treasure.Length-1)]);
 					}
 					
@@ -113,7 +113,8 @@ public class GenLevelCellular : MonoBehaviour
 						go.transform.localPosition=new Vector3(x- map.GetLength(0)/2,0,y-map.GetLength(1)/2);
 						go.transform.localRotation=Quaternion.identity;
 
-						go=(GameObject)GameObject.Instantiate(debris[Random.Range(0,debris.Length-1)]);
+						if (debris!=null && debris.Length>0)
+							go=(GameObject)GameObject.Instantiate(debris[Random.Range(0,debris.Length-1)]);
 					}
 					else if (map[x,y]==7) 
 					{
