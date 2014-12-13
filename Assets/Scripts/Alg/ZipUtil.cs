@@ -15,29 +15,14 @@ public class ZipUtil :System.Object
 			dest.Write(bytes, 0, cnt);
 		}
 	}
-	public static byte[] Zip(string str) {
+	public static byte[] Zip(string str) 
+	{
 		var bytes = Encoding.UTF8.GetBytes(str);
-		
-		using (var msi = new MemoryStream(bytes))
-		using (var mso = new MemoryStream()) {
-			using (var gs = new GZipStream(mso, CompressionMode.Compress)) {
-				//msi.CopyTo(gs);
-				CopyTo(msi, gs);
-			}
-			
-			return mso.ToArray();
-		}
+		return CLZF2.Compress(bytes);	
 	}
 	
 	public static string Unzip(byte[] bytes) {
-		using (var msi = new MemoryStream(bytes))
-		using (var mso = new MemoryStream()) {
-			using (var gs = new GZipStream(msi, CompressionMode.Decompress)) {
-				//gs.CopyTo(mso);
-				CopyTo(gs, mso);
-			}
-			
-			return Encoding.UTF8.GetString(mso.ToArray());
-		}
+						
+			return Encoding.UTF8.GetString(CLZF2.Decompress(bytes));
 	}
 }
