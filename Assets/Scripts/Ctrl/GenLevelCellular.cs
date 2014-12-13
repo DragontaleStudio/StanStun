@@ -14,16 +14,24 @@ public class GenLevelCellular : MonoBehaviour
 //	public List<int[,]> maps=new List<int[,]>();
 
 	public int[,] map;
-		 
+
+	bool created=false;
+
 	// Use this for initialization
 	void Start () 
 	{
-		createLevel();
+	
 	}
 	
 	// Update is called once per frame
 	void Update () 
 	{
+		if (!created && Network.isServer)
+		{
+			createLevel();
+			created=true;
+		}
+
 		if (Input.GetMouseButtonUp(0))
 		{
 			//createLevel();
