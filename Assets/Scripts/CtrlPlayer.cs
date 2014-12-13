@@ -149,7 +149,8 @@ public class CtrlPlayer : MonoBehaviour
 			int xCoord=mapPos[0];
 			int yCoord=mapPos[1];
 			//			Debug.Log("Player map coord:" + xCoord+","+yCoord);
-			if ( getMap()[xCoord,yCoord]==1)
+
+			if ( getMap()!=null && getMap()[xCoord,yCoord]==1)
 			{
 				transform.localPosition=vec;
 			}
