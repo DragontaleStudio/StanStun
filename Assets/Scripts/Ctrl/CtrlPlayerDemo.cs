@@ -49,7 +49,7 @@ public class CtrlPlayerDemo : MonoBehaviour {
 			int xCoord=Mathf.CeilToInt(transform.localPosition.x)+16;
 			int yCoord=Mathf.CeilToInt(transform.localPosition.z)+16;
 //			Debug.Log("Player map coord:" + xCoord+","+yCoord);
-			if (getMap()[xCoord,yCoord]==1)
+			if ( xCoord<0 || yCoord<0 ||xCoord>31 || yCoord>31 ||getMap()[xCoord,yCoord]==1)
 			{
 				transform.localPosition=vec;
 			}
