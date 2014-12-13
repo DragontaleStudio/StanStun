@@ -19,22 +19,24 @@ public class CameraRail : MonoBehaviour
 	
 	void LateUpdate() 
 	{
-		Vector3 desiredPosition = target.transform.position + offset;
-		Vector3 position;
-		if (Vector3.Distance(desiredPosition,transform.position)<tolerance)
+		if (target!=null)
 		{
-			position=desiredPosition;
-		}
-		else
-		{
-			position= Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
-		}
+			Vector3 desiredPosition = target.transform.position + offset;
+			Vector3 position;
+			if (Vector3.Distance(desiredPosition,transform.position)<tolerance)
+			{
+				position=desiredPosition;
+			}
+			else
+			{
+				position= Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * damping);
+			}
+			
+			
+			if (lookAt) transform.LookAt(position);
+			if (rotate) transform.localRotation=Quaternion.Lerp(transform.localRotation,target.transform.localRotation,Time.deltaTime * damping);
+			transform.position = position;
 		
-		
-		if (lookAt) transform.LookAt(position);
-		if (rotate) transform.localRotation=Quaternion.Lerp(transform.localRotation,target.transform.localRotation,Time.deltaTime * damping);
-		transform.position = position;
-		
-		
+		}		
 	}
 }

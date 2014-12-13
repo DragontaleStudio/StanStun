@@ -89,7 +89,11 @@ public class NetworkManager : MonoBehaviour
 
 	private void SpawnPlayer()
 	{
-		GameObject Player = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
-		Player.name = "Me";
+		GameObject player = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+		player.name = "Me";
+		player.transform.parent=GameObject.Find("Face1").transform;
+		player.transform.eulerAngles=Vector3.zero;
+		player.transform.localPosition=Vector3.zero;
+
 	}
 }
