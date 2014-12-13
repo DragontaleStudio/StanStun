@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class NetworkManager : MonoBehaviour 
 {
@@ -9,6 +10,8 @@ public class NetworkManager : MonoBehaviour
 	private HostData[] hostList;
 	
 	public GameObject playerPrefab;
+	public GameObject button;
+	public Canvas ui;
 
 	private void StartServer()
 	{
@@ -51,20 +54,32 @@ public class NetworkManager : MonoBehaviour
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RefreshHostList();
 			
-			if (hostList != null)
-			{
-				for (int i = 0; i < hostList.Length; i++)
-				{
-					if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
-						JoinServer(hostList[i]);
-				}
-			}
+
 		}
 	}
 
 	private void RefreshHostList()
 	{
 		MasterServer.RequestHostList(typeName);
+
+		if (hostList != null)
+		{
+			for (int i = 0; i < hostList.Length; i++)
+			{
+				foreach (HostData d in hostList)
+				{
+					GameObject go = (GameObject)Instantiate(button);
+					
+					go.transform.SetParent(ui.transform);
+					go.transform.localScale = new Vector3(1, 1, 1);
+					Button b = go.GetComponent<Button>();
+					b.onClick.AddListener(() => JoinServer(d));
+
+					go.transform.Find("Text").GetComponent<Text>().text = d.gameName;
+				}
+			}
+		}
+
 	}
 
 	private void JoinServer(HostData hostData)

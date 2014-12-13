@@ -97,17 +97,22 @@ public class CtrlPlayer : MonoBehaviour
 		}
 	}
 
-	private bool isStunned()
-	{
-		return model.stunnedFor > 0;
-	}
-
-	private bool hasResources()
+	public bool hasResources()
 	{
 		return model.carryResources > 0;
 	}
 
-	private bool canStun()
+	public bool canCollect()
+	{
+		return model.carryResources < model.maxCarryResources;
+	}
+
+	public bool isStunned()
+	{
+		return model.stunnedFor > 0;
+	}
+
+	public bool canStun()
 	{
 		return !hasResources();
 	}
@@ -116,5 +121,23 @@ public class CtrlPlayer : MonoBehaviour
 	{
 		model.stunnedFor = stunnedFor;
 		EventManager.onGotStunned("test");
+	}
+
+	public void onStuffPickup()
+	{
+		model.carryResources++;
+		EventManager.onStuffPickup();
+
+		//full loaded
+		if (!canCollect())
+		{
+			EventManager.onStuffFullyLoaded();
+		}
+	}
+
+	public void onStuffDepositTobase()
+	{
+		model.carryResources = 0;
+		EventManager.onStuffDepositTobase();
 	}
 }
