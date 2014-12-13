@@ -196,4 +196,19 @@ public class CellularAutomata : System.Object
 		}
 
 	}
+
+	public static int[] getSpawnPoint(int [,] map)
+	{
+		while(true)
+		{
+			int x=Random.Range(4,28);
+			int y=Random.Range(4,28);
+			
+			if (map[x,y]==0)
+			{
+				return new int[]{x,y};
+			}
+		}
+		
+	}
 }
