@@ -47,7 +47,7 @@ public class CtrlUiManager : MonoBehaviour
 		EventManager.stunnEnemy -= onStunnEnemy;
 	}
 
-	void onGotStunned()
+	void onGotStunned(string player)
 	{
 		model.stunnedFor = 3.0f;
 
@@ -56,7 +56,7 @@ public class CtrlUiManager : MonoBehaviour
 		stunn.SetActive(false);
 	}
 
-	void onStunnEnemy()
+	void onStunnEnemy(string player)
 	{
 		resources.text = model.carryResources.ToString();
 	}
@@ -76,6 +76,6 @@ public class CtrlUiManager : MonoBehaviour
 	//XXX: TEST
 	public void stunnMe()
 	{
-		EventManager.onGotStunned();
+		EventManager.onGotStunned("test");
 	}
 }
