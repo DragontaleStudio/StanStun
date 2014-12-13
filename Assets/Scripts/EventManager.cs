@@ -16,20 +16,8 @@ public class EventManager : MonoBehaviour
 	public static event stuffAction stuffPickup;
 	public static event stuffAction stuffFullyLoaded;
 	public static event stuffAction stuffDropped;
-	public static event stuffAction stuffDeliveredTobase;
-
-
-//	public delegate void obstacleAction();
-//	public static event obstacleAction totemonBreak;
-//	public static event obstacleAction totemonJump;
-//	public static event obstacleAction totemonPass;
-//	public static event obstacleAction wrongObstacle;
-//
-//	public delegate void junctionAction(string nextPathToFollow, int nodeToFollow);
-//	public static event junctionAction nextPathToFollow;
-//
-//	public delegate void collectAction();
-//	public static event collectAction totemonCollect;
+	public static event stuffAction stuffDepositTobase;
+	
 
 	public static void onGameStart()
 	{
@@ -60,6 +48,38 @@ public class EventManager : MonoBehaviour
 		if(stunnEnemy != null)
 		{	
 			stunnEnemy(player);
+		}
+	}
+
+	public static void onStuffPickup()
+	{
+		if(stuffPickup != null)
+		{	
+			stuffPickup();
+		}
+	}
+
+	public static void onStuffDropped()
+	{
+		if(stuffDropped != null)
+		{	
+			stuffDropped();
+		}
+	}
+
+	public static void onStuffFullyLoaded()
+	{
+		if(stuffFullyLoaded != null)
+		{	
+			stuffFullyLoaded();
+		}
+	}
+
+	public static void onStuffDepositTobase()
+	{
+		if(stuffDepositTobase != null)
+		{	
+			stuffDepositTobase();
 		}
 	}
 }
