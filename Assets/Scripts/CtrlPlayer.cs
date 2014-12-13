@@ -12,6 +12,14 @@ public class CtrlPlayer : MonoBehaviour
 	private Vector3 syncStartPosition = Vector3.zero;
 	private Vector3 syncEndPosition = Vector3.zero;
 
+	public int speed=1;
+	public int turnSpeed=1;
+	public float damping=0.5f;
+
+	TheCube cube;
+	GameObject daPlayer;
+	public Vector3 curSpeed=Vector3.zero;
+
 	void Awake()
 	{
 		model = new Player();
@@ -20,10 +28,18 @@ public class CtrlPlayer : MonoBehaviour
 		if (networkView.isMine)
 		{
 			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
+			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
 		}
 
 		InputColorChange();
 	}
+
+	void Start()
+	{
+		cube=new TheCube();
+		daPlayer=GameObject.Find("PlayerMan");
+	}
+
 
 	void Update()
 	{
@@ -44,10 +60,10 @@ public class CtrlPlayer : MonoBehaviour
 
 		if (stream.isWriting)
 		{
-			syncPosition = rigidbody.position;
+			syncPosition = transform.position;
 			stream.Serialize(ref syncPosition);
 			
-			syncVelocity = rigidbody.velocity;
+			syncVelocity = curSpeed;
 			stream.Serialize(ref syncVelocity);
 		}
 		else
@@ -66,17 +82,78 @@ public class CtrlPlayer : MonoBehaviour
 
 	private void InputMovement()
 	{
+		Vector3 vec=transform.localPosition;
+		bool moved=false;
 		if (Input.GetKey(KeyCode.W))
-			rigidbody.MovePosition(rigidbody.position + Vector3.forward * model.speed * Time.deltaTime);
+		{
+			//			transform.Translate(0,0,speed*Time.deltaTime);
+			//			transform.Translate(Vector3.forward*speed*Time.deltaTime);
+			curSpeed.z=speed;
+			moved=true;
+		}
 		
 		if (Input.GetKey(KeyCode.S))
-			rigidbody.MovePosition(rigidbody.position - Vector3.forward * model.speed * Time.deltaTime);
-		
-		if (Input.GetKey(KeyCode.D))
-			rigidbody.MovePosition(rigidbody.position + Vector3.right * model.speed * Time.deltaTime);
+		{
+			//			transform.Translate(0,0,-speed*Time.deltaTime);
+			//			transform.Translate(Vector3.back*speed*Time.deltaTime);
+			curSpeed.z=-speed;
+			moved=true;
+		}
 		
 		if (Input.GetKey(KeyCode.A))
-			rigidbody.MovePosition(rigidbody.position - Vector3.right * model.speed * Time.deltaTime);
+		{
+			//			transform.Translate(-speed*Time.deltaTime,0,0);
+			//			transform.Translate(Vector3.left*speed*Time.deltaTime);
+			curSpeed.x=-speed;
+			moved=true;
+		}
+		
+		if (Input.GetKey(KeyCode.D))
+		{
+			//			transform.Translate(speed*Time.deltaTime,0,0);
+			//			transform.Translate(Vector3.right*speed*Time.deltaTime);
+			curSpeed.x=speed;
+			moved=true;
+		}
+		
+		curSpeed=curSpeed*damping;
+		transform.Translate(curSpeed*Time.deltaTime);
+		
+		
+		//		if (moved)
+		{
+			int[] mapPos=getMapPos();
+			TheCube.Direction dir= cube.getOverflowDirection(mapPos);
+			if (dir!=TheCube.Direction.ANY_FUCKIN_WHERE)
+			{
+				Debug.Log("Overflowed!!!");
+				int targetSide=cube.getNeighbour( dir);
+				Debug.Log("Overflowed to "+dir+ " to target side "+targetSide );
+				GameObject theFloor=GameObject.Find("Face"+targetSide);
+				
+				daPlayer.transform.parent=theFloor.transform;
+				Camera.main.transform.parent.parent=theFloor.transform;
+				Camera.main.transform.parent.localRotation=Quaternion.identity;
+				daPlayer.transform.localRotation=Quaternion.identity;
+				
+				
+				cube.currentSide=targetSide;
+				
+				int[] overflowedClampedPos=cube.getOverFlowClampedPos(mapPos);
+				Debug.Log("ClampedPos:"+overflowedClampedPos[0]+","+overflowedClampedPos[1]);
+				transform.localPosition=new Vector3(overflowedClampedPos[0]-16,0,overflowedClampedPos[1]-16);
+				
+				mapPos=getMapPos();
+			}
+			
+			int xCoord=mapPos[0];
+			int yCoord=mapPos[1];
+			//			Debug.Log("Player map coord:" + xCoord+","+yCoord);
+			if ( getMap()[xCoord,yCoord]==1)
+			{
+				transform.localPosition=vec;
+			}
+		}
 	}
 
 	private void SyncedMovement()
@@ -92,12 +169,12 @@ public class CtrlPlayer : MonoBehaviour
 	
 	[RPC] void ChangeColorTo(Vector3 color)
 	{
-		renderer.material.color = new Color(color.x, color.y, color.z, 1f);
-		
-		if (networkView.isMine)
-		{
-			networkView.RPC("ChangeColorTo", RPCMode.OthersBuffered, color);
-		}
+//		renderer.material.color = new Color(color.x, color.y, color.z, 1f);
+//		
+//		if (networkView.isMine)
+//		{
+//			networkView.RPC("ChangeColorTo", RPCMode.OthersBuffered, color);
+//		}
 	}
 
 	public bool hasResources()
@@ -143,4 +220,21 @@ public class CtrlPlayer : MonoBehaviour
 		model.carryResources = 0;
 		EventManager.onStuffDepositTobase();
 	}
+
+
+	public int[,] getMap()
+	{
+		return gameObject.transform.parent.GetComponent<GenLevelCellular>().map;
+	}
+	
+	public int[] getMapPos()
+	{
+		int xCoord=Mathf.CeilToInt(transform.localPosition.x)+16;
+		int yCoord=Mathf.CeilToInt(transform.localPosition.z)+16;
+		
+		return new int[]{xCoord,yCoord};
+	}
+
+
+
 }
