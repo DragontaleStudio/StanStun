@@ -170,11 +170,11 @@ public class CtrlPlayerDemo : MonoBehaviour {
 		}
 		else if (y<0)
 		{
-			dir=TheCube.Direction.NORTH;
+			dir=TheCube.Direction.SOUTH;
 		}
 		else if (y>=height)
 		{
-			dir=TheCube.Direction.SOUTH;
+			dir=TheCube.Direction.NORTH;
 		}
 		return dir;
 	}
