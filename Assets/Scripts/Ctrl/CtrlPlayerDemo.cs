@@ -5,6 +5,10 @@ public class CtrlPlayerDemo : MonoBehaviour {
 
 	public int speed=1;
 	public int turnSpeed=1;
+
+	public int playerCoins=0;
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -14,26 +18,51 @@ public class CtrlPlayerDemo : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		Vector3 vec=transform.localPosition;
+		bool moved=false;
 		if (Input.GetKey(KeyCode.W))
 		{
 			transform.Translate(0,0,speed*Time.deltaTime);
+			moved=true;
 		}
 
 		if (Input.GetKey(KeyCode.S))
 		{
 			transform.Translate(0,0,-speed*Time.deltaTime);
+			moved=true;
 		}
 
 		if (Input.GetKey(KeyCode.A))
 		{
 			transform.Translate(-speed*Time.deltaTime,0,0);
+			moved=true;
 		}
+
 		if (Input.GetKey(KeyCode.D))
 		{
 			transform.Translate(speed*Time.deltaTime,0,0);
+			moved=true;
 		}
 
+		if (moved)
+		{
+			int xCoord=Mathf.CeilToInt(transform.localPosition.x)+16;
+			int yCoord=Mathf.CeilToInt(transform.localPosition.z)+16;
+//			Debug.Log("Player map coord:" + xCoord+","+yCoord);
+			if (getMap()[xCoord,yCoord]==1)
+			{
+				transform.localPosition=vec;
+			}
+			else if (getMap()[xCoord,yCoord]==2)
+			{
 
+				if (gameObject.transform.parent.Find("LVL"+xCoord+","+yCoord)!=null)
+				{
+					Destroy(gameObject.transform.parent.Find("LVL"+xCoord+","+yCoord).gameObject);
+					playerCoins++;
+				}
+			}
+		}
 	}
 
 	void FixedUpdate () 
@@ -62,5 +91,10 @@ public class CtrlPlayerDemo : MonoBehaviour {
 			// Smoothly rotate towards the target point.
 			transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 		}
+	}
+
+	public int[,] getMap()
+	{
+		return gameObject.transform.parent.GetComponent<GenLevelCellular>().map;
 	}
 }
