@@ -5,6 +5,7 @@ public class CtrlPlayerDemo : MonoBehaviour {
 
 	public int speed=1;
 	public int turnSpeed=1;
+	public float damping=0.5f;
 
 	public int playerCoins=0;
 
@@ -14,7 +15,8 @@ public class CtrlPlayerDemo : MonoBehaviour {
 
 	GameObject daPlayer;
 	TheCube cube;
-	Vector3 curSpeed=Vector3.zero;
+	public Vector3 curSpeed=Vector3.zero;
+
 
 	// Use this for initialization
 	void Start () 
@@ -32,35 +34,40 @@ public class CtrlPlayerDemo : MonoBehaviour {
 		if (Input.GetKey(KeyCode.W))
 		{
 //			transform.Translate(0,0,speed*Time.deltaTime);
-			transform.Translate(Vector3.forward*speed*Time.deltaTime);
+//			transform.Translate(Vector3.forward*speed*Time.deltaTime);
+			curSpeed.z=speed;
 			moved=true;
 		}
 
 		if (Input.GetKey(KeyCode.S))
 		{
 //			transform.Translate(0,0,-speed*Time.deltaTime);
-			transform.Translate(Vector3.back*speed*Time.deltaTime);
+//			transform.Translate(Vector3.back*speed*Time.deltaTime);
+			curSpeed.z=-speed;
 			moved=true;
 		}
 
 		if (Input.GetKey(KeyCode.A))
 		{
 //			transform.Translate(-speed*Time.deltaTime,0,0);
-			transform.Translate(Vector3.left*speed*Time.deltaTime);
+//			transform.Translate(Vector3.left*speed*Time.deltaTime);
+			curSpeed.x=-speed;
 			moved=true;
 		}
 
 		if (Input.GetKey(KeyCode.D))
 		{
 //			transform.Translate(speed*Time.deltaTime,0,0);
-			transform.Translate(Vector3.right*speed*Time.deltaTime);
+//			transform.Translate(Vector3.right*speed*Time.deltaTime);
+			curSpeed.x=speed;
 			moved=true;
 		}
 
-//		transform.Translate(curSpeed*Time.deltaTime);
+		curSpeed=curSpeed*damping;
+		transform.Translate(curSpeed*Time.deltaTime);
 
 
-		if (moved)
+//		if (moved)
 		{
 			int[] mapPos=getMapPos();
 			TheCube.Direction dir= getOverflowDirection(mapPos);
