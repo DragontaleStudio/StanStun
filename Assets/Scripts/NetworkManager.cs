@@ -64,8 +64,6 @@ public class NetworkManager : MonoBehaviour
 			
 			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
 				RefreshHostList();
-			
-
 		}
 	}
 
@@ -103,8 +101,20 @@ public class NetworkManager : MonoBehaviour
 		GameObject player = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
 		player.name = "Me";
 		player.transform.parent=GameObject.Find("Face1").transform;
+		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
+		if (map!=null)
+		{
+			int[] spawnPoint=CellularAutomata.getSpawnPoint(map);
+			player.transform.localPosition=new Vector3(spawnPoint[0],0,spawnPoint[1]);
+			Debug.Log("Spawned player at "+spawnPoint[0]+","+spawnPoint[1]);
+		}
+		else
+		{
+			player.transform.localPosition=Vector3.zero;
+			Debug.Log("Spawned player at 0,0... map not found");
+		}
+
 		player.transform.eulerAngles=Vector3.zero;
-		player.transform.localPosition=Vector3.zero;
 
 	}
 }
