@@ -8,6 +8,8 @@ public class TheCube :System.Object
 	Dictionary<string,int> neighbours=new Dictionary<string, int>();
 
 	public int currentSide=1;
+	int width=32;
+	int height=32;
 
 	public  TheCube()
 	{
@@ -46,5 +48,52 @@ public class TheCube :System.Object
 	public int getNeighbour(Direction d)
 	{
 		return neighbours[currentSide+d.ToString()];
+	}
+
+	public TheCube.Direction getOverflowDirection(int[] pos)
+	{
+		int x=pos[0];
+		int y=pos[1];
+		TheCube.Direction dir=TheCube.Direction.ANY_FUCKIN_WHERE;
+		if (x<0) 
+		{
+			dir=TheCube.Direction.EAST;
+		}
+		else if (x>=width) 
+		{
+			dir=TheCube.Direction.WEST;
+		}
+		else if (y<0)
+		{
+			dir=TheCube.Direction.SOUTH;
+		}
+		else if (y>=height)
+		{
+			dir=TheCube.Direction.NORTH;
+		}
+		return dir;
+	}
+	
+	public int[] getOverFlowClampedPos(int[] pos)
+	{
+		int x=pos[0];
+		int y=pos[1];
+		if (x<0) 
+		{
+			x=width-1;
+		}
+		else if (x>=width) 
+		{
+			x=0;
+		}
+		else if (y<0)
+		{
+			y=height-1;
+		}
+		else if (y>=height)
+		{
+			y=0;
+		}
+		return new int[]{x,y};
 	}
 }
