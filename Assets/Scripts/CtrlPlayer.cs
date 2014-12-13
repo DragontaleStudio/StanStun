@@ -37,7 +37,7 @@ public class CtrlPlayer : MonoBehaviour
 	void Start()
 	{
 		cube=new TheCube();
-		daPlayer=GameObject.Find("PlayerMan");
+		daPlayer=gameObject;
 	}
 
 
@@ -76,7 +76,7 @@ public class CtrlPlayer : MonoBehaviour
 			lastSynchronizationTime = Time.time;
 			
 			syncEndPosition = syncPosition + syncVelocity * syncDelay;
-			syncStartPosition = rigidbody.position;
+			syncStartPosition = transform.position;
 		}
 	}
 
@@ -159,7 +159,7 @@ public class CtrlPlayer : MonoBehaviour
 	private void SyncedMovement()
 	{
 		syncTime += Time.deltaTime;
-		rigidbody.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+		transform.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
 	}
 
 	private void InputColorChange()
