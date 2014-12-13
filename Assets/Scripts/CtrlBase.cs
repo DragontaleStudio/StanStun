@@ -18,6 +18,7 @@ public class CtrlBase : MonoBehaviour
 			//Instantiate deposit particle
 			GameObject goSpark = (GameObject) GameObject.Instantiate(depositSpark);
 			goSpark.transform.localPosition = gameObject.transform.localPosition;
+			Destroy(goSpark, 3.0f);
 		}
 	}
 }

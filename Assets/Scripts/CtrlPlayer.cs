@@ -17,7 +17,10 @@ public class CtrlPlayer : MonoBehaviour
 		model = new Player();
 		transform.Find("RangeToAttack").GetComponent<SphereCollider>().radius = model.stunRange;
 
-		GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
+		if (networkView.isMine)
+		{
+			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
+		}
 
 		InputColorChange();
 	}
