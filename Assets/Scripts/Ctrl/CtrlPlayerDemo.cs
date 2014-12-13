@@ -57,7 +57,7 @@ public class CtrlPlayerDemo : MonoBehaviour {
 			moved=true;
 		}
 
-		transform.Translate(curSpeed*Time.deltaTime);
+//		transform.Translate(curSpeed*Time.deltaTime);
 
 
 		if (moved)
