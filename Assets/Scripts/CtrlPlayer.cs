@@ -115,6 +115,6 @@ public class CtrlPlayer : MonoBehaviour
 	public void setStunned(int stunnedFor)
 	{
 		model.stunnedFor = stunnedFor;
-		EventManager.onGotStunned();
+		EventManager.onGotStunned("test");
 	}
 }

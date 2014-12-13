@@ -7,9 +7,17 @@ public class EventManager : MonoBehaviour
 	public static event gameAction gameStart;
 	public static event gameAction gameFinish;
 
-	public delegate void stunAction();
+	public delegate void stunAction(string player);
 	public static event stunAction gotStunned;
 	public static event stunAction stunnEnemy;
+
+
+	public delegate void stuffAction();
+	public static event stuffAction stuffPickup;
+	public static event stuffAction stuffFullyLoaded;
+	public static event stuffAction stuffDropped;
+	public static event stuffAction stuffDeliveredTobase;
+
 
 //	public delegate void obstacleAction();
 //	public static event obstacleAction totemonBreak;
@@ -39,19 +47,19 @@ public class EventManager : MonoBehaviour
 		}
 	}
 
-	public static void onGotStunned()
+	public static void onGotStunned(string player)
 	{
 		if(gotStunned != null)
 		{	
-			gotStunned();
+			gotStunned(player);
 		}
 	}
 
-	public static void onStunnEnemy()
+	public static void onStunnEnemy(string player)
 	{
 		if(stunnEnemy != null)
 		{	
-			stunnEnemy();
+			stunnEnemy(player);
 		}
 	}
 }
