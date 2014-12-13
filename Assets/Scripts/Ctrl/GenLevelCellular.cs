@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+
+
 public class GenLevelCellular : MonoBehaviour 
 {
 	[System.Serializable]
@@ -26,35 +28,30 @@ public class GenLevelCellular : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-	
-	}
-
-	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info)
-	{
-		CMap mapRef=new CMap();
-//		mapRef.sermap=map;
-
-		if (stream.isWriting)
-		{
-			stream.Serialize(ref mapRef);
-		}
-		else
-		{
-			stream.Serialize(ref mapRef);
-//			map=mapRef.map;
-			createLevel(false);
-			created=true;
-		}
-	}
-
-	// Update is called once per frame
-	void Update () 
-	{
 		if (!created && Network.isServer)
 		{
 			createLevel(true);
 			created=true;
 		}
+	}
+
+	private void newMapGenerated()
+	{
+		changeMap(map);
+	}
+	
+	[RPC] void changeMap(int[,] mapRef)
+	{
+		if (networkView.isMine)
+		{
+			networkView.RPC("changeMap", RPCMode.OthersBuffered, mapRef);
+		}
+	}
+
+
+	// Update is called once per frame
+	void Update () 
+	{
 
 		if (Input.GetMouseButtonUp(0))
 		{
