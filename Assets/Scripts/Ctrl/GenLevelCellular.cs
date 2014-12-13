@@ -35,7 +35,9 @@ public class GenLevelCellular : MonoBehaviour
 	public void newMapGenerated()
 	{
 //		changeMap(map);
-		changeMapStr("dssdds");
+//		changeMapStr("dssdds");
+
+		networkView.RPC("changeMapStr", RPCMode.OthersBuffered, stringify());
 	}
 	
 //	[RPC] void changeMap(int[,] mapRef)
@@ -48,13 +50,10 @@ public class GenLevelCellular : MonoBehaviour
 
 	[RPC] void changeMapStr(string mapRef)
 	{
-
-
-		if (networkView.isMine)
+		if (Network.isClient)
 		{
 			destringify(mapRef);
 			createLevel(false);
-			networkView.RPC("changeMap", RPCMode.OthersBuffered, mapRef);
 		}
 	}
 
