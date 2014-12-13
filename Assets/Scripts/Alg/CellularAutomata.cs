@@ -180,4 +180,20 @@ public class CellularAutomata : System.Object
 			map[x,height-1]=0;
 		}
 	}
+
+	public void placeBase(int [,] map)
+	{
+		while(true)
+		{
+			int x=Random.Range(4,28);
+			int y=Random.Range(4,28);
+
+			if (map[x,y]==0)
+			{
+				map[x,y]=7;
+				break;
+			}
+		}
+
+	}
 }
