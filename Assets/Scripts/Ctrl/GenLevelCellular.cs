@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
-
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class GenLevelCellular : MonoBehaviour 
 {
@@ -33,17 +34,62 @@ public class GenLevelCellular : MonoBehaviour
 
 	public void newMapGenerated()
 	{
-		changeMap(map);
+//		changeMap(map);
+		changeMapStr("dssdds");
 	}
 	
-	[RPC] void changeMap(int[,] mapRef)
+//	[RPC] void changeMap(int[,] mapRef)
+//	{
+//		if (networkView.isMine)
+//		{
+//			networkView.RPC("changeMap", RPCMode.OthersBuffered, mapRef);
+//		}
+//	}
+
+	[RPC] void changeMapStr(string mapRef)
 	{
+		destringify(mapRef);
+		createLevel(false);
+
 		if (networkView.isMine)
 		{
 			networkView.RPC("changeMap", RPCMode.OthersBuffered, mapRef);
 		}
 	}
 
+	
+	private string stringify()
+	{
+		//Get a binary formatter
+		BinaryFormatter b = new BinaryFormatter();
+		
+		//Create an in memory stream
+		MemoryStream m = new MemoryStream();
+		
+		//Save the scores
+		b.Serialize(m, map);
+		
+		// return the string
+		return System.Convert.ToBase64String(m.GetBuffer());
+	}
+
+	private void destringify(string worldSerialisedString)
+	{
+		string data = worldSerialisedString;
+		
+		//If not blank then load it
+		if(!System.String.IsNullOrEmpty(data))
+		{
+			//Binary formatter for loading back
+			BinaryFormatter b = new BinaryFormatter();
+			
+			//Create a memory stream with the data
+			MemoryStream m = new MemoryStream(System.Convert.FromBase64String(data));
+			
+			//Load back the scores
+			map= b.Deserialize(m) as int[,];
+		}
+	}
 
 	// Update is called once per frame
 	void Update () 
