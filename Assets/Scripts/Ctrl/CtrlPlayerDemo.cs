@@ -24,6 +24,8 @@ public class CtrlPlayerDemo : MonoBehaviour {
 		cube=new TheCube();
 	}
 	
+
+	
 	// Update is called once per frame
 	void Update () 
 	{
