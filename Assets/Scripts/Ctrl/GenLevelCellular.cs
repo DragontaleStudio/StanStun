@@ -127,7 +127,7 @@ public class GenLevelCellular : MonoBehaviour
 				ca.simplePlaceTreasure(map,6);
 				ca.zeroLimits(map);
 				ca.placeBase(map);
-				ca.simplePlaceObject(map,.2f);
+				ca.simplePlaceObject(map,.01f);
 			}
 
 
