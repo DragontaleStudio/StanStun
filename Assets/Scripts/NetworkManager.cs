@@ -13,6 +13,8 @@ public class NetworkManager : MonoBehaviour
 	public GameObject button;
 	public Canvas ui;
 
+	int playerCount=1;
+
 	private void StartServer()
 	{
 //		MasterServer.ipAddress = "127.0.0.1";
@@ -38,6 +40,7 @@ public class NetworkManager : MonoBehaviour
 		{
 			world.transform.GetChild(i).GetComponent<GenLevelCellular>().newMapGenerated();
 		}
+		playerCount++;
 	}
 
 	void OnMasterServerEvent(MasterServerEvent msEvent)
@@ -99,7 +102,7 @@ public class NetworkManager : MonoBehaviour
 	private void SpawnPlayer()
 	{
 		GameObject player = (GameObject) Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0);
-		player.name = "Me";
+		player.name = "Me"+playerCount;
 		player.transform.parent=GameObject.Find("Face1").transform;
 		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
 		if (map!=null)
