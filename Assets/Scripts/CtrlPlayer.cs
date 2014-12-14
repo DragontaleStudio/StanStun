@@ -259,7 +259,6 @@ public class CtrlPlayer : MonoBehaviour
 	public void setStunned(float stunnedFor)
 	{
 		model.stunnedFor = stunnedFor;
-		gameObject.transform.Find("Cylinder").renderer.material.color = Color.red;
 		EventManager.onGotStunned("test");
 	}
 
