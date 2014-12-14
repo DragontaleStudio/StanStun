@@ -36,7 +36,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
-//			Camera.main.GetComponent<AudioListener>().enabled = false;
+//			
 		}
 
 		InputColorChange();
@@ -59,6 +59,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			gameObject.name="player_me_"+networkView.owner;
 			team=int.Parse(networkView.owner.ToString())%2+1;
+			Destroy(Camera.main.GetComponent<AudioListener>());
 			gameObject.AddComponent<AudioListener>();
 		}
 		else 
@@ -76,7 +77,7 @@ public class CtrlPlayer : MonoBehaviour
 
 		Camera.main.transform.parent.parent=theFloor.transform;
 		Camera.main.transform.parent.localRotation=Quaternion.identity;
-		Camera.main.transform.localRotation=theFloor.transform.localRotation;
+		Camera.main.transform.localRotation=Quaternion.identity;
 
 		player.transform.parent=theFloor.transform;
 		player.transform.localRotation=Quaternion.identity;
@@ -85,7 +86,7 @@ public class CtrlPlayer : MonoBehaviour
 		if (map!=null)
 		{
 			int[] spawnPoint=CellularAutomata.getSpawnPoint(map);
-			player.transform.localPosition=new Vector3(spawnPoint[0],0,spawnPoint[1]);
+			player.transform.localPosition=new Vector3(spawnPoint[0]-16,0,spawnPoint[1]-16);
 			Debug.Log("Spawned player at "+spawnPoint[0]+","+spawnPoint[1]);
 		}
 		else
