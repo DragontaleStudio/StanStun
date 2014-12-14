@@ -19,7 +19,7 @@ public class CtrlPlayer : MonoBehaviour
 	TheCube cube;
 	GameObject daPlayer;
 	public Vector3 curSpeed=Vector3.zero;
-
+	TheCube.Direction playerDir=TheCube.Direction.NORTH;
 
 
 	void Awake()
@@ -45,9 +45,12 @@ public class CtrlPlayer : MonoBehaviour
 
 	void Update()
 	{
-		if (networkView.isMine && !isStunned())
+		if (networkView.isMine )
 		{
-			InputMovement();
+			if (!isStunned())
+			{
+				InputMovement();
+			}
 		}
 		else
 		{
@@ -92,6 +95,7 @@ public class CtrlPlayer : MonoBehaviour
 			//			transform.Translate(Vector3.forward*speed*Time.deltaTime);
 			curSpeed.z=speed;
 			moved=true;
+			playerDir=TheCube.Direction.NORTH;
 		}
 		
 		if (Input.GetKey(KeyCode.S))
@@ -100,6 +104,7 @@ public class CtrlPlayer : MonoBehaviour
 			//			transform.Translate(Vector3.back*speed*Time.deltaTime);
 			curSpeed.z=-speed;
 			moved=true;
+			playerDir=TheCube.Direction.SOUTH;
 		}
 		
 		if (Input.GetKey(KeyCode.A))
@@ -108,6 +113,7 @@ public class CtrlPlayer : MonoBehaviour
 			//			transform.Translate(Vector3.left*speed*Time.deltaTime);
 			curSpeed.x=-speed;
 			moved=true;
+			playerDir=TheCube.Direction.EAST;
 		}
 		
 		if (Input.GetKey(KeyCode.D))
@@ -116,11 +122,12 @@ public class CtrlPlayer : MonoBehaviour
 			//			transform.Translate(Vector3.right*speed*Time.deltaTime);
 			curSpeed.x=speed;
 			moved=true;
+			playerDir=TheCube.Direction.WEST;
 		}
 		
 		curSpeed=curSpeed*damping;
 		transform.Translate(curSpeed*Time.deltaTime);
-		
+//		transform.
 		
 		//		if (moved)
 		{
