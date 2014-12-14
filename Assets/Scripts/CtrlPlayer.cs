@@ -130,10 +130,12 @@ public class CtrlPlayer : MonoBehaviour
 				int targetSide=cube.getNeighbour( dir);
 				Debug.Log("Overflowed to "+dir+ " to target side "+targetSide );
 				GameObject theFloor=GameObject.Find("Face"+targetSide);
-				
+				GameObject curFloor=gameObject.transform.parent.gameObject;
+
 				daPlayer.transform.parent=theFloor.transform;
 				Camera.main.transform.parent.parent=theFloor.transform;
 				Camera.main.transform.parent.localRotation=Quaternion.identity;
+				Camera.main.transform.localRotation=curFloor.transform.localRotation;
 				daPlayer.transform.localRotation=Quaternion.identity;
 				
 				
