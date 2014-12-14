@@ -10,14 +10,17 @@ public class CtrlBase : MonoBehaviour
 	{
 		CtrlPlayer player = other.GetComponent<CtrlPlayer>();
 		
-		if (player.model.team == team && player.hasResources())
+		if (player != null && player.model.team == team && player.hasResources())
 		{
 			//BroadcastEvent
 			player.onStuffDepositTobase();
 			
 			//Instantiate deposit particle
 			GameObject goSpark = (GameObject) GameObject.Instantiate(depositSpark);
-			goSpark.transform.localPosition = gameObject.transform.localPosition;
+			goSpark.transform.parent = this.transform;
+			goSpark.transform.localPosition = Vector3.zero;
+			goSpark.transform.rotation = Quaternion.identity;
+
 			Destroy(goSpark, 3.0f);
 		}
 	}

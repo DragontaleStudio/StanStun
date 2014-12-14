@@ -42,7 +42,6 @@ public class CtrlPlayer : MonoBehaviour
 		daPlayer=gameObject;
 	}
 
-
 	void Update()
 	{
 		if (networkView.isMine )
@@ -62,7 +61,7 @@ public class CtrlPlayer : MonoBehaviour
 	{
 		Vector3 syncPosition = Vector3.zero;
 		Vector3 syncVelocity = Vector3.zero;
-
+		
 		if (stream.isWriting)
 		{
 			syncPosition = transform.position;
@@ -209,9 +208,10 @@ public class CtrlPlayer : MonoBehaviour
 		return !hasResources();
 	}
 
-	public void setStunned(int stunnedFor)
+	public void setStunned(float stunnedFor)
 	{
 		model.stunnedFor = stunnedFor;
+		gameObject.transform.Find("Cylinder").renderer.material.color = Color.red;
 		EventManager.onGotStunned("test");
 	}
 

@@ -14,5 +14,5 @@ public class Player
 	public float stunTimeCollide = 3.0f;
 	public float stunTimeRange = 2.0f;
 
-	public int team;
+	public int team=1;
 }
