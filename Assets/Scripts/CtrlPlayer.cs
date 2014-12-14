@@ -4,7 +4,6 @@ using System.Collections;
 public class CtrlPlayer : MonoBehaviour 
 {
 	public Player model;
-
 	public Animator animator;
 
 	//Sync values
