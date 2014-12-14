@@ -35,7 +35,7 @@ public class CtrlPlayer : MonoBehaviour
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
 		}
 
-//		daRangeAttack=transform.Find("RangeToAttack").gameObject;
+		daRangeAttack=transform.Find("RangeToAttack").gameObject;
 //		daRangeAttack.SetActive(false);
 	}
 
@@ -199,7 +199,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			animator.SetBool("walking", false);
 		}
-		
+
 		//		if (moved)
 		{
 			int[] mapPos=getMapPos();
@@ -237,6 +237,17 @@ public class CtrlPlayer : MonoBehaviour
 				transform.localPosition=vec;
 			}
 		}
+
+		int teamOfFloor = int.Parse(transform.parent.name.Substring(4))>3?2:1;
+		if(teamOfFloor==model.team)
+	    {
+			daRangeAttack.SetActive(true);
+	    }
+		else
+		{
+			daRangeAttack.SetActive(false);
+		}
+
 	}
 
 	public void stunTheBitches()
