@@ -60,6 +60,14 @@ public class CtrlPlayer : MonoBehaviour
 			team=int.Parse(networkView.owner.ToString())%2+1;
 			Destroy(Camera.main.GetComponent<AudioListener>());
 			gameObject.AddComponent<AudioListener>();
+
+			GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
+
+			Camera.main.transform.parent.parent=theFloor.transform;
+			Camera.main.transform.parent.localRotation=Quaternion.identity;
+			Camera.main.transform.localRotation=theFloor.transform.localRotation;
+
+
 		}
 		else 
 		{
@@ -74,9 +82,6 @@ public class CtrlPlayer : MonoBehaviour
 		GameObject player=gameObject;
 		GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
 
-		Camera.main.transform.parent.parent=theFloor.transform;
-		Camera.main.transform.parent.localRotation=Quaternion.identity;
-		Camera.main.transform.localRotation=Quaternion.identity;
 
 		player.transform.parent=theFloor.transform;
 		player.transform.localRotation=Quaternion.identity;
