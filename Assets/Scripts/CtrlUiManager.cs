@@ -6,6 +6,8 @@ public class CtrlUiManager : MonoBehaviour
 {
 	public Player model;
 
+	public Animator resourcesAnimator;
+
 	public Text resources;
 	public Text stunned;
 
@@ -107,6 +109,7 @@ public class CtrlUiManager : MonoBehaviour
 		switch(model.carryResources)
 		{
 		 case 0:
+			resourcesAnimator.SetBool("fullpoints", false);
 			pie1.SetActive(false);
 			pie2.SetActive(false);
 			pie3.SetActive(false);
@@ -133,6 +136,9 @@ public class CtrlUiManager : MonoBehaviour
 			break;
 		case 6:
 			pie6.SetActive(true);
+			full.SetActive(true);
+			resourcesAnimator.SetBool("fullpoints", true);
+
 			break;
 		}
 
