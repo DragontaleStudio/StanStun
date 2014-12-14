@@ -36,6 +36,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
+			Camera.main.GetComponent<AudioListener>().enabled = false;
 		}
 
 		InputColorChange();
