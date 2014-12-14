@@ -24,7 +24,7 @@ public class CtrlPlayer : MonoBehaviour
 	public Vector3 curSpeed=Vector3.zero;
 	TheCube.Direction playerDir=TheCube.Direction.NORTH;
 
-	public int team=-1;
+//	public int team=-1;
 
 	void Awake()
 	{
@@ -57,11 +57,11 @@ public class CtrlPlayer : MonoBehaviour
 		if (networkView.isMine) 
 		{
 			gameObject.name="player_me_"+networkView.owner;
-			team=int.Parse(networkView.owner.ToString())%2+1;
+			model.team=int.Parse(networkView.owner.ToString())%2+1;
 			Destroy(Camera.main.GetComponent<AudioListener>());
 			gameObject.AddComponent<AudioListener>();
 
-			GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
+			GameObject theFloor=GameObject.Find(model.team==1?"Face1":"Face5");
 
 			Camera.main.transform.parent.parent=theFloor.transform;
 			Camera.main.transform.parent.localRotation=Quaternion.identity;
@@ -72,7 +72,7 @@ public class CtrlPlayer : MonoBehaviour
 		else 
 		{
 			gameObject.name="player_"+msg.sender;
-			team=int.Parse(msg.sender.ToString())%2+1;
+			model.team=int.Parse(msg.sender.ToString())%2+1;
 		}
 	}
 
@@ -80,7 +80,7 @@ public class CtrlPlayer : MonoBehaviour
 	{
 		Debug.Log("initDaMutha");
 		GameObject player=gameObject;
-		GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
+		GameObject theFloor=GameObject.Find(model.team==1?"Face1":"Face5");
 
 
 		player.transform.parent=theFloor.transform;
@@ -333,7 +333,7 @@ public class CtrlPlayer : MonoBehaviour
 
 	public void onStuffPickup(int team)
 	{
-		model.carryResources+= this.team==team?1:3;
+		model.carryResources+= this.model.team==team?1:3;
 		EventManager.onStuffPickup();
 
 		//full loaded
@@ -345,7 +345,12 @@ public class CtrlPlayer : MonoBehaviour
 
 	public void onStuffDepositTobase()
 	{
+		Transform t=GameObject.Find("ScoreDummy").transform;
+		if (model.team==1) t.localPosition=new Vector3(t.localPosition.x+model.carryResources,t.localPosition.y,0);
+		else t.localPosition=new Vector3(t.localPosition.x,t.localPosition.y+model.carryResources,0); 
+
 		model.carryResources = 0;
+
 		EventManager.onStuffDepositTobase();
 	}
 
