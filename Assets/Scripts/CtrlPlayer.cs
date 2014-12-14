@@ -193,7 +193,7 @@ public class CtrlPlayer : MonoBehaviour
 		transform.Translate(curSpeed*Time.deltaTime);
 		setDirection();
 
-		if (curSpeed.magnitude > 0.3)
+		if (curSpeed.magnitude > 0.5)
 		{
 			animator.SetBool("walking", true);
 		}else
@@ -327,7 +327,9 @@ public class CtrlPlayer : MonoBehaviour
 
 	public void onStuffPickup(int team)
 	{
-		model.carryResources+= this.model.team==team?1:3;
+		model.points+= this.model.team==team?1:3;
+		model.carryResources++;
+
 		EventManager.onStuffPickup();
 
 		//full loaded
@@ -351,6 +353,7 @@ public class CtrlPlayer : MonoBehaviour
 
 		GetComponent<CtrlPlayerSoundManager>().playDeposit(model.carryResources);
 
+		model.points = 0;
 		model.carryResources = 0;
 
 		EventManager.onStuffDepositTobase();
