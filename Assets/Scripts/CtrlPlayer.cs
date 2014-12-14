@@ -36,7 +36,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
-			Camera.main.GetComponent<AudioListener>().enabled = false;
+//			Camera.main.GetComponent<AudioListener>().enabled = false;
 		}
 
 		InputColorChange();
@@ -51,17 +51,37 @@ public class CtrlPlayer : MonoBehaviour
 		daPlayer=gameObject;
 	}
 
+	
+	void OnNetworkInstantiate (NetworkMessageInfo msg ) 
+	{
+		Debug.Log("OnNetworkInstantiate");
+		if (networkView.isMine) 
+		{
+			gameObject.name="player_me_"+networkView.owner;
+			team=int.Parse(networkView.owner.ToString())%2+1;
+			gameObject.AddComponent<AudioListener>();
+		}
+		else 
+		{
+			gameObject.name="player_"+msg.sender;
+			team=int.Parse(msg.sender.ToString())%2+1;
+		}
+	}
+
 	public void initDaMutha()
 	{
 		Debug.Log("initDaMutha");
 		GameObject player=gameObject;
 		GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
-		player.transform.parent=theFloor.transform;
 
 		Camera.main.transform.parent.parent=theFloor.transform;
 		Camera.main.transform.parent.localRotation=Quaternion.identity;
+		Camera.main.transform.localRotation=theFloor.transform.localRotation;
 
-		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
+		player.transform.parent=theFloor.transform;
+		player.transform.localRotation=Quaternion.identity;
+
+		int [,] map=theFloor.GetComponent<GenLevelCellular>().map;
 		if (map!=null)
 		{
 			int[] spawnPoint=CellularAutomata.getSpawnPoint(map);
@@ -73,25 +93,10 @@ public class CtrlPlayer : MonoBehaviour
 			player.transform.localPosition=Vector3.zero;
 			Debug.Log("Spawned player at 0,0... map not found");
 		}
-		player.transform.localPosition=Vector3.zero;
-		player.transform.eulerAngles=Vector3.zero;
+
+//		player.transform.eulerAngles=Vector3.zero;
 	}
 
-	void OnNetworkInstantiate (NetworkMessageInfo msg ) 
-	{
-		Debug.Log("OnNetworkInstantiate");
-		if (networkView.isMine) 
-		{
-			gameObject.name="player_me_"+networkView.owner;
-			team=int.Parse(networkView.owner.ToString())%2+1;
-		}
-		else 
-		{
-			gameObject.name="player_"+msg.sender;
-			team=int.Parse(msg.sender.ToString())%2+1;
-		}
-
-	}
 	
 	void Update()
 	{
