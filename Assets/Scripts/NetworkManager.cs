@@ -73,7 +73,9 @@ public class NetworkManager : MonoBehaviour
 				for (int i = 0; i < hostList.Length; i++)
 				{
 					if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
+					{
 						JoinServer(hostList[i]);
+					}
 				}
 			}
 		}
