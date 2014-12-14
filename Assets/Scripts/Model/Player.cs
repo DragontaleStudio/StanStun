@@ -6,7 +6,7 @@ public class Player
 	public float speed = 10f;
 
 	public int carryResources = 0;
-	public int maxCarryResources = 3;
+	public int maxCarryResources = 6;
 
 	public float stunnedFor = 0.0f;
 
