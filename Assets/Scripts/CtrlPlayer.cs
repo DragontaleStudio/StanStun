@@ -105,6 +105,7 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			if (!isStunned())
 			{
+				curSpeed=Vector2.zero;
 				InputMovement();
 			}
 		}

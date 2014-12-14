@@ -7,7 +7,7 @@ public class CtrlStun : MonoBehaviour {
 	{
 		CtrlPlayer player = other.GetComponent<CtrlPlayer>();
 
-		if (player!=null  && gameObject.transform.parent.gameObject!=other.gameObject)
+		if (player!=null  && gameObject.transform.parent.gameObject.name!=other.gameObject.name)
 		{
 			player.setStunned(3.0f);
 		}
