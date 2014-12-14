@@ -235,6 +235,7 @@ public class CtrlPlayer : MonoBehaviour
 			if ( getMap()!=null && (getMap()[xCoord,yCoord]==1 || getMap()[xCoord,yCoord]==3))
 			{
 				transform.localPosition=vec;
+				curSpeed=Vector3.Reflect(curSpeed,Vector3.right);
 			}
 		}
 
