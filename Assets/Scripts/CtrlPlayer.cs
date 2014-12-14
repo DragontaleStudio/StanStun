@@ -20,6 +20,8 @@ public class CtrlPlayer : MonoBehaviour
 	GameObject daPlayer;
 	public Vector3 curSpeed=Vector3.zero;
 
+
+
 	void Awake()
 	{
 		model = new Player();
@@ -126,7 +128,7 @@ public class CtrlPlayer : MonoBehaviour
 			TheCube.Direction dir= cube.getOverflowDirection(mapPos);
 			if (dir!=TheCube.Direction.ANY_FUCKIN_WHERE)
 			{
-				Debug.Log("Overflowed!!!");
+				Debug.Log("Overflowed!!! Pos:"+mapPos[0]+","+mapPos[1]);
 				int targetSide=cube.getNeighbour( dir);
 				Debug.Log("Overflowed to "+dir+ " to target side "+targetSide );
 				GameObject theFloor=GameObject.Find("Face"+targetSide);
