@@ -34,22 +34,22 @@ public class CtrlUiManager : MonoBehaviour
 			goBack();
 		}
 
-		if (model != null)
-		{
-			if (model.stunnedFor > 0)
-			{
-				model.stunnedFor -= Time.deltaTime;
-				stunned.text = "Stunned for: " + model.stunnedFor.ToString();
-			}else
-			{
-				stunned.text = "Not Stunned";
-
-				if (model.carryResources == 0)
-				{
-					stunn.SetActive(true);
-				}
-			}
-		}
+//		if (model != null)
+//		{
+//			if (model.stunnedFor > 0)
+//			{
+//				model.stunnedFor -= Time.deltaTime;
+//				stunned.text = "Stunned for: " + model.stunnedFor.ToString();
+//			}else
+//			{
+//				stunned.text = "Not Stunned";
+//
+//				if (model.carryResources == 0)
+//				{
+//					stunn.SetActive(true);
+//				}
+//			}
+//		}
 	}
 
 	void OnEnable()
