@@ -52,8 +52,9 @@ public class CtrlPlayer : MonoBehaviour
 
 	public void initDaMutha()
 	{
+		Debug.Log("initDaMutha");
 		GameObject player=gameObject;
-		player.transform.parent=GameObject.Find("Face1").transform;
+		player.transform.parent=GameObject.Find(team==1?"Face1":"Face5").transform;
 		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
 		if (map!=null)
 		{
@@ -170,10 +171,10 @@ public class CtrlPlayer : MonoBehaviour
 			playerDir=TheCube.Direction.WEST;
 		}
 
-		if (Input.GetKey(KeyCode.Space))
-		{
-			stunTheBitches();
-		}
+//		if (Input.GetKey(KeyCode.Space))
+//		{
+//			stunTheBitches();
+//		}
 
 		curSpeed=curSpeed*damping;
 		transform.Translate(curSpeed*Time.deltaTime);
