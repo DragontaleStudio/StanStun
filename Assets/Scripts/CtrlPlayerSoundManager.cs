@@ -19,6 +19,7 @@ public class CtrlPlayerSoundManager : MonoBehaviour
 		EventManager.stuffPickup += playCollect;
 		EventManager.gotStunned += playBirds;
 		EventManager.stunnEnemy += playRangedStun;
+		EventManager.stunnEnemy += playLaugh;
 	}
 	
 	void OnDisable()
@@ -26,6 +27,7 @@ public class CtrlPlayerSoundManager : MonoBehaviour
 		EventManager.stuffPickup -= playCollect;
 		EventManager.gotStunned -= playBirds;
 		EventManager.stunnEnemy -= playRangedStun;
+		EventManager.stunnEnemy -= playLaugh;
 	}
 
 	void playRangedStun(string enemy)
@@ -56,6 +58,11 @@ public class CtrlPlayerSoundManager : MonoBehaviour
 	void playBirds(string enemy)
 	{
 		GetComponent<AudioSource>().PlayOneShot(birds);
+	}
+
+	void playLaugh(string enemy)
+	{
+		GetComponent<AudioSource>().PlayOneShot(laugh[Random.Range(0, laugh.Length-1)]);
 	}
 
 	public void playDeposit(int sound)
