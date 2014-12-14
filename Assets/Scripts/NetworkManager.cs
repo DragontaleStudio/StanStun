@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NetworkManager : MonoBehaviour 
 {
 	private const string typeName = "BurntDragonGame";
-	public string gameName = "Ampipolis";
+	public string gameName = "Da RoYal TemplE";
 
 	private HostData[] hostList;
 	
@@ -62,10 +62,10 @@ public class NetworkManager : MonoBehaviour
 	{
 		if (!Network.isClient && !Network.isServer)
 		{
-			if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
+			if (GUI.Button(new Rect(100, 100, 250, 100), "New Game"))
 				StartServer();
 			
-			if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
+			if (GUI.Button(new Rect(100, 250, 250, 100), "Join Game"))
 				RefreshHostList();
 
 			if (hostList != null)

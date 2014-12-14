@@ -9,9 +9,21 @@ public class CtrlUiManager : MonoBehaviour
 	public Text resources;
 	public Text stunned;
 
+	//Score UI
 	public Text blueTeam;
 	public Text redTeam;
 	public GameObject scoreDummy;
+
+	//Resources Pie
+	public GameObject pie1;
+	public GameObject pie2;
+	public GameObject pie3;
+	public GameObject pie4;
+	public GameObject pie5;
+	public GameObject pie6;
+	public GameObject full;
+	public Text points;
+
 
 	public GameObject stunn;
 
@@ -92,12 +104,46 @@ public class CtrlUiManager : MonoBehaviour
 
 	private void updateResourcesText()
 	{
-		resources.text = "Resources: " + model.carryResources.ToString();
+		switch(model.carryResources)
+		{
+		 case 0:
+			pie1.SetActive(false);
+			pie2.SetActive(false);
+			pie3.SetActive(false);
+			pie4.SetActive(false);
+			pie5.SetActive(false);
+			pie6.SetActive(false);
+			full.SetActive(false);
+			break;
+
+		case 1:
+			pie1.SetActive(true);
+			break;
+		case 2:
+			pie2.SetActive(true);
+			break;
+		case 3:
+			pie3.SetActive(true);
+			break;
+		case 4:
+			pie4.SetActive(true);
+			break;
+		case 5:
+			pie5.SetActive(true);
+			break;
+		case 6:
+			pie6.SetActive(true);
+			break;
+		}
+
+		this.points.text = model.points.ToString();
 	}
 
 	private void onStuffDepositTobase()
 	{
 		blueTeam.text = ((int) scoreDummy.transform.localPosition.y).ToString();
 		redTeam.text = ((int) scoreDummy.transform.localPosition.x).ToString();
+
+		updateResourcesText();
 	}
 }
