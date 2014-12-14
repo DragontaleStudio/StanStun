@@ -68,15 +68,16 @@ public class CtrlPlayer : MonoBehaviour
 		player.transform.eulerAngles=Vector3.zero;
 	}
 
-	public void OnNetworkInstantiate (NetworkMessageInfo msg ) 
+	void OnNetworkInstantiate (NetworkMessageInfo msg ) 
 	{
+		Debug.Log("OnNetworkInstantiate");
 		if (networkView.isMine) 
 		{
-			transform.name="player_me_"+networkView.owner;
+			gameObject.name="player_me_"+networkView.owner;
 		}
 		else 
 		{
-			transform.name="player_"+msg.sender;
+			gameObject.name="player_"+msg.sender;
 		}
 	}
 	
