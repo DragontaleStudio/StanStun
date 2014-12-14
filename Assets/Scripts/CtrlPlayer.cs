@@ -18,6 +18,8 @@ public class CtrlPlayer : MonoBehaviour
 
 	TheCube cube;
 	GameObject daPlayer;
+	GameObject daRangeAttack;
+
 	public Vector3 curSpeed=Vector3.zero;
 	TheCube.Direction playerDir=TheCube.Direction.NORTH;
 
@@ -34,6 +36,8 @@ public class CtrlPlayer : MonoBehaviour
 		}
 
 		InputColorChange();
+		daRangeAttack=transform.Find("RangeToAttack").gameObject;
+		daRangeAttack.SetActive(false);
 	}
 
 	void Start()
@@ -124,7 +128,12 @@ public class CtrlPlayer : MonoBehaviour
 			moved=true;
 			playerDir=TheCube.Direction.WEST;
 		}
-		
+
+		if (Input.GetKey(KeyCode.Space))
+		{
+			stunTheBitches();
+		}
+
 		curSpeed=curSpeed*damping;
 		transform.Translate(curSpeed*Time.deltaTime);
 		setDirection();
@@ -168,6 +177,19 @@ public class CtrlPlayer : MonoBehaviour
 		}
 	}
 
+	public void stunTheBitches()
+	{
+		daRangeAttack.SetActive(true);
+		StartCoroutine("doNotStunTheBitches");
+	}
+
+	public IEnumerator doNotStunTheBitches()
+	{
+		yield return new WaitForSeconds(0.5f);
+		daRangeAttack.SetActive(false);
+	}
+
+	
 	private void SyncedMovement()
 	{
 		syncTime += Time.deltaTime;
@@ -259,7 +281,6 @@ public class CtrlPlayer : MonoBehaviour
 		EventManager.onStuffDepositTobase();
 	}
 
-
 	public int[,] getMap()
 	{
 		return gameObject.transform.parent.GetComponent<GenLevelCellular>().map;
@@ -272,7 +293,4 @@ public class CtrlPlayer : MonoBehaviour
 		
 		return new int[]{xCoord,yCoord};
 	}
-
-
-
 }
