@@ -17,7 +17,8 @@ public class GenLevelCellular : MonoBehaviour
 	public GameObject[] wall;
 	public GameObject[] treasure;
 	public GameObject[] debris;
-	public GameObject playerBase;
+	public GameObject redPlayerBase;
+	public GameObject bluePlayerBase;
 
 	public GameObject textCoords;
 
@@ -126,7 +127,7 @@ public class GenLevelCellular : MonoBehaviour
 				map= ca.generateMap();
 				ca.simplePlaceTreasure(map,6);
 				ca.zeroLimits(map);
-				ca.placeBase(map);
+				if("Face1".Equals(gameObject.name)||"Face5".Equals(gameObject.name)) ca.placeBase(map);
 				ca.simplePlaceObject(map,.01f);
 			}
 
@@ -177,7 +178,7 @@ public class GenLevelCellular : MonoBehaviour
 					}
 					else if (map[x,y]==7) 
 					{
-						go=(GameObject)GameObject.Instantiate(playerBase);
+						go=(GameObject)GameObject.Instantiate("Face1".Equals(gameObject.name)?redPlayerBase:bluePlayerBase);
 					}
 
 					if (go!=null)
