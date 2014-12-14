@@ -327,8 +327,14 @@ public class CtrlPlayer : MonoBehaviour
 	public void onStuffDepositTobase()
 	{
 		Transform t=GameObject.Find("ScoreDummy").transform;
-		if (model.team==1) t.localPosition=new Vector3(t.localPosition.x+model.carryResources,t.localPosition.y,0);
-		else t.localPosition=new Vector3(t.localPosition.x,t.localPosition.y+model.carryResources,0); 
+
+		if (model.team==1)
+		{
+			t.localPosition=new Vector3(t.localPosition.x+model.carryResources,t.localPosition.y,0);
+		}else
+		{
+			t.localPosition=new Vector3(t.localPosition.x,t.localPosition.y+model.carryResources,0); 
+		}
 
 		GetComponent<CtrlPlayerSoundManager>().playDeposit(model.carryResources);
 

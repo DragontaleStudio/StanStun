@@ -8,6 +8,11 @@ public class CtrlUiManager : MonoBehaviour
 
 	public Text resources;
 	public Text stunned;
+
+	public Text blueTeam;
+	public Text redTeam;
+	public GameObject scoreDummy;
+
 	public GameObject stunn;
 
 	void Update()
@@ -41,7 +46,7 @@ public class CtrlUiManager : MonoBehaviour
 		EventManager.stunnEnemy += onStunnEnemy;
 		EventManager.stuffPickup += updateResourcesText;
 		EventManager.stuffFullyLoaded += updateResourcesText;
-		EventManager.stuffDepositTobase += updateResourcesText;
+		EventManager.stuffDepositTobase += onStuffDepositTobase;
 	}
 	
 	void OnDisable()
@@ -50,7 +55,7 @@ public class CtrlUiManager : MonoBehaviour
 		EventManager.stunnEnemy -= onStunnEnemy;
 		EventManager.stuffPickup -= updateResourcesText;
 		EventManager.stuffFullyLoaded -= updateResourcesText;
-		EventManager.stuffDepositTobase -= updateResourcesText;
+		EventManager.stuffDepositTobase -= onStuffDepositTobase;
 	}
 
 	void onGotStunned(string player)
@@ -88,5 +93,11 @@ public class CtrlUiManager : MonoBehaviour
 	private void updateResourcesText()
 	{
 		resources.text = "Resources: " + model.carryResources.ToString();
+	}
+
+	private void onStuffDepositTobase()
+	{
+		blueTeam.text = ((int) scoreDummy.transform.localPosition.y).ToString();
+		redTeam.text = ((int) scoreDummy.transform.localPosition.x).ToString();
 	}
 }
