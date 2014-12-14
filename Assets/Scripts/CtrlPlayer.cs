@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class CtrlPlayer : MonoBehaviour 
@@ -23,9 +23,7 @@ public class CtrlPlayer : MonoBehaviour
 
 	public Vector3 curSpeed=Vector3.zero;
 	TheCube.Direction playerDir=TheCube.Direction.NORTH;
-
-//	public int team=-1;
-
+	
 	void Awake()
 	{
 		model = new Player();
@@ -35,10 +33,8 @@ public class CtrlPlayer : MonoBehaviour
 		{
 			GameObject.Find("UiManager").GetComponent<CtrlUiManager>().model = model;
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
-//			
 		}
 
-		InputColorChange();
 		daRangeAttack=transform.Find("RangeToAttack").gameObject;
 		daRangeAttack.SetActive(false);
 	}
@@ -288,21 +284,6 @@ public class CtrlPlayer : MonoBehaviour
 			t.localRotation=Quaternion.Euler(new Vector3(270,90,0));
 		}
 
-	}
-
-	private void InputColorChange()
-	{
-		ChangeColorTo(new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
-	}
-	
-	[RPC] void ChangeColorTo(Vector3 color)
-	{
-//		renderer.material.color = new Color(color.x, color.y, color.z, 1f);
-//		
-//		if (networkView.isMine)
-//		{
-//			networkView.RPC("ChangeColorTo", RPCMode.OthersBuffered, color);
-//		}
 	}
 
 	public bool hasResources()
