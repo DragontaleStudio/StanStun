@@ -6,6 +6,11 @@ public class CtrlCollectible : MonoBehaviour
 	public GameObject destroySpark;
 	public int team;
 
+	void Start()
+	{
+		team = int.Parse(transform.parent.name.Substring(4))>3?2:1;
+	}
+
 	void OnTriggerEnter(Collider other) 
 	{
 		CtrlPlayer player = other.GetComponent<CtrlPlayer>();
