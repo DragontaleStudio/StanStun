@@ -12,6 +12,8 @@ public class CtrlPlayerSoundManager : MonoBehaviour
 	public AudioClip[] laugh;
 	public AudioClip birds;
 
+	public AudioClip[] deposit;
+
 	void OnEnable()
 	{
 		EventManager.stuffPickup += playCollect;
@@ -55,4 +57,17 @@ public class CtrlPlayerSoundManager : MonoBehaviour
 	{
 		GetComponent<AudioSource>().PlayOneShot(birds);
 	}
+
+	public void playDeposit(int sound)
+	{
+		sound--;
+
+		if (sound>5)
+		{
+			sound=5;
+		}
+
+		GetComponent<AudioSource>().PlayOneShot(deposit[sound]);
+	}
+
 }
