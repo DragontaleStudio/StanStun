@@ -67,7 +67,6 @@ public class CtrlUiManager : MonoBehaviour
 		resources.text = model.carryResources.ToString();
 	}
 
-
 	private void goBack()
 	{	
 		Application.Quit();

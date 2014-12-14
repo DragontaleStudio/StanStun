@@ -95,6 +95,7 @@ public class CtrlPlayer : MonoBehaviour
 			curSpeed.z=speed;
 			moved=true;
 			playerDir=TheCube.Direction.NORTH;
+
 		}
 		
 		if (Input.GetKey(KeyCode.S))
@@ -126,7 +127,7 @@ public class CtrlPlayer : MonoBehaviour
 		
 		curSpeed=curSpeed*damping;
 		transform.Translate(curSpeed*Time.deltaTime);
-//		transform.
+		setDirection();
 		
 		//		if (moved)
 		{
@@ -171,6 +172,31 @@ public class CtrlPlayer : MonoBehaviour
 	{
 		syncTime += Time.deltaTime;
 		transform.position = Vector3.Lerp(syncStartPosition, syncEndPosition, syncTime / syncDelay);
+	}
+
+	public void setDirection()
+	{
+		Transform t=gameObject.transform.Find("AncientJoe").transform;
+		if (playerDir==TheCube.Direction.NORTH)
+		{
+			t.localRotation=Quaternion.Euler(new Vector3(270,0,0));
+		}
+		else
+		if (playerDir==TheCube.Direction.SOUTH )
+		{
+			t.localRotation=Quaternion.Euler(new Vector3(270,180,0));
+		}
+		else
+		if (playerDir==TheCube.Direction.EAST)
+		{
+			t.localRotation=Quaternion.Euler(new Vector3(270,-90,0));
+		}
+		else
+		if (playerDir==TheCube.Direction.WEST)
+		{
+			t.localRotation=Quaternion.Euler(new Vector3(270,90,0));
+		}
+
 	}
 
 	private void InputColorChange()
