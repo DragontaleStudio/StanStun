@@ -7,6 +7,7 @@ public class CtrlUiManager : MonoBehaviour
 	public Player model;
 
 	public Animator resourcesAnimator;
+	public Animator pointsAnimator;
 
 	public Text resources;
 	public Text stunned;
@@ -149,6 +150,13 @@ public class CtrlUiManager : MonoBehaviour
 	{
 		blueTeam.text = ((int) scoreDummy.transform.localPosition.y).ToString();
 		redTeam.text = ((int) scoreDummy.transform.localPosition.x).ToString();
+
+		if (!pointsAnimator.enabled)
+		{
+			pointsAnimator.enabled=true;
+		}
+
+		pointsAnimator.Play("addPoints");
 
 		updateResourcesText();
 	}
