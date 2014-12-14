@@ -54,7 +54,12 @@ public class CtrlPlayer : MonoBehaviour
 	{
 		Debug.Log("initDaMutha");
 		GameObject player=gameObject;
-		player.transform.parent=GameObject.Find(team==1?"Face1":"Face5").transform;
+		GameObject theFloor=GameObject.Find(team==1?"Face1":"Face5");
+		player.transform.parent=theFloor.transform;
+
+		Camera.main.transform.parent.parent=theFloor.transform;
+		Camera.main.transform.parent.localRotation=Quaternion.identity;
+
 		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
 		if (map!=null)
 		{
