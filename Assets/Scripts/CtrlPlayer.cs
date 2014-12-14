@@ -42,10 +42,44 @@ public class CtrlPlayer : MonoBehaviour
 
 	void Start()
 	{
+		initDaMutha();
 		cube=new TheCube();
 		daPlayer=gameObject;
 	}
 
+	public void initDaMutha()
+	{
+		GameObject player=gameObject;
+		player.name = "Me";
+		player.transform.parent=GameObject.Find("Face1").transform;
+		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
+		if (map!=null)
+		{
+			int[] spawnPoint=CellularAutomata.getSpawnPoint(map);
+			player.transform.localPosition=new Vector3(spawnPoint[0],0,spawnPoint[1]);
+			Debug.Log("Spawned player at "+spawnPoint[0]+","+spawnPoint[1]);
+		}
+		else
+		{
+			player.transform.localPosition=Vector3.zero;
+			Debug.Log("Spawned player at 0,0... map not found");
+		}
+		player.transform.localPosition=Vector3.zero;
+		player.transform.eulerAngles=Vector3.zero;
+	}
+
+	public void OnNetworkInstantiate (NetworkMessageInfo msg ) 
+	{
+		if (networkView.isMine) 
+		{
+			transform.name="player_me_"+networkView.owner;
+		}
+		else 
+		{
+			transform.name="player_"+msg.sender;
+		}
+	}
+	
 	void Update()
 	{
 		if (networkView.isMine )
@@ -87,6 +121,7 @@ public class CtrlPlayer : MonoBehaviour
 			syncStartPosition = transform.position;
 		}
 	}
+
 
 	private void InputMovement()
 	{
