@@ -110,6 +110,11 @@ public class CtrlPlayer : MonoBehaviour
 				curSpeed=Vector2.zero;
 				InputMovement();
 			}
+			else
+			{
+				if (model.stunnedFor>0)
+					model.stunnedFor-=Time.deltaTime;
+			}
 
 			 
 		
