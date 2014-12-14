@@ -179,8 +179,11 @@ public class CtrlPlayer : MonoBehaviour
 
 	public void stunTheBitches()
 	{
-		daRangeAttack.SetActive(true);
-		StartCoroutine("doNotStunTheBitches");
+		if (canStun())
+		{
+			daRangeAttack.SetActive(true);
+			StartCoroutine("doNotStunTheBitches");
+		}
 	}
 
 	public IEnumerator doNotStunTheBitches()

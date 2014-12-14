@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class NetworkManager : MonoBehaviour 
 {
 	private const string typeName = "BurntDragonGame";
-	private const string gameName = "Ampipolis";
+	public string gameName = "Ampipolis";
 
 	private HostData[] hostList;
 	
