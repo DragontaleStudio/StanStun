@@ -47,7 +47,7 @@ public class CtrlUiManager : MonoBehaviour
 			EventManager.onGameFinish();
 		}
 
-		time.text=timeCountdown.ToString();
+		time.text = System.Math.Round((double) timeCountdown, 2).ToString();
 
 
 //		if (model != null)
