@@ -10,7 +10,6 @@ public class CtrlStun : MonoBehaviour {
 		if (player!=null  && gameObject.transform.parent.gameObject!=other.gameObject)
 		{
 			player.setStunned(3.0f);
-
 		}
 		else
 		{

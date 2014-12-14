@@ -35,8 +35,8 @@ public class CtrlPlayer : MonoBehaviour
 			GameObject.Find("CameraMan").GetComponent<CameraRail>().target=this.gameObject;
 		}
 
-		daRangeAttack=transform.Find("RangeToAttack").gameObject;
-		daRangeAttack.SetActive(false);
+//		daRangeAttack=transform.Find("RangeToAttack").gameObject;
+//		daRangeAttack.SetActive(false);
 	}
 
 	void Start()
