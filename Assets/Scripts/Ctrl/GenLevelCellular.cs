@@ -19,6 +19,8 @@ public class GenLevelCellular : MonoBehaviour
 	public GameObject[] debris;
 	public GameObject playerBase;
 
+	public GameObject textCoords;
+
 	public Material floorMaterial;
 //	public List<int[,]> maps=new List<int[,]>();
 	
@@ -141,6 +143,12 @@ public class GenLevelCellular : MonoBehaviour
 //						go.transform.Find("Cube").GetComponent<MeshFilter>().mesh.uv
 //							mainTextureOffset.x=x/width;
 //						go.transform.Find("Cube").renderer.material.mainTextureOffset.y=y/width;
+						if (x==0||y==0||x==31||y==31)
+						{
+							go=(GameObject)GameObject.Instantiate(textCoords);
+
+							go.transform.GetChild(0).GetComponent<TextMesh>().text=transform.gameObject.name.Substring(4)+":"+x+","+y;
+						}
 					}
 					else if (map[x,y]==1) 
 					{
