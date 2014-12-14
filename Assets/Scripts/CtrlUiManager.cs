@@ -28,10 +28,12 @@ public class CtrlUiManager : MonoBehaviour
 	public Text points;
 	public Text time;
 
+	public GameObject daTime;
+	public GameObject daPie;
 
 	public GameObject stunn;
 
-	public float timeCountdown=180f;
+	public float timeCountdown=5f;
 	public bool startCountDown=false;
 
 	void Update()
@@ -44,6 +46,8 @@ public class CtrlUiManager : MonoBehaviour
 		if (startCountDown)
 		{
 			timeCountdown-=Time.deltaTime;
+
+			if (timeCountdown <0)
 			EventManager.onGameFinish();
 		}
 
@@ -75,6 +79,7 @@ public class CtrlUiManager : MonoBehaviour
 		EventManager.stuffPickup += updateResourcesText;
 		EventManager.stuffFullyLoaded += updateResourcesText;
 		EventManager.stuffDepositTobase += onStuffDepositTobase;
+		EventManager.gameFinish += myfinish;
 	}
 	
 	void OnDisable()
@@ -84,6 +89,7 @@ public class CtrlUiManager : MonoBehaviour
 		EventManager.stuffPickup -= updateResourcesText;
 		EventManager.stuffFullyLoaded -= updateResourcesText;
 		EventManager.stuffDepositTobase -= onStuffDepositTobase;
+		EventManager.gameFinish -= myfinish;
 	}
 
 	void onGotStunned(string player)
@@ -172,5 +178,17 @@ public class CtrlUiManager : MonoBehaviour
 		pointsAnimator.Play("addPoints");
 
 		updateResourcesText();
+	}
+
+	private void myfinish()
+	{
+		if (!pointsAnimator.enabled)
+		{
+			pointsAnimator.enabled=true;
+		}
+
+		pointsAnimator.SetBool("myfinito", true);
+		daTime.SetActive(false);
+		daPie.SetActive(false);
 	}
 }
