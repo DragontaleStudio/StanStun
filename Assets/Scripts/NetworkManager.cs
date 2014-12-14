@@ -98,7 +98,7 @@ public class NetworkManager : MonoBehaviour
 
 	private void SpawnPlayer()
 	{
-		GameObject player = (GameObject) Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
+		GameObject player = (GameObject) Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0);
 		player.name = "Me";
 		player.transform.parent=GameObject.Find("Face1").transform;
 		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
@@ -113,7 +113,7 @@ public class NetworkManager : MonoBehaviour
 			player.transform.localPosition=Vector3.zero;
 			Debug.Log("Spawned player at 0,0... map not found");
 		}
-
+		player.transform.localPosition=Vector3.zero;
 		player.transform.eulerAngles=Vector3.zero;
 
 	}
