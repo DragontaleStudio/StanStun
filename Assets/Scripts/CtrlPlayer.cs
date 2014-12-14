@@ -67,7 +67,7 @@ public class CtrlPlayer : MonoBehaviour
 			Camera.main.transform.parent.localRotation=Quaternion.identity;
 			Camera.main.transform.localRotation=theFloor.transform.localRotation;
 
-			transform.Find("PointLight").GetComponent<Light>().color = team==1?Color.red:Color.blue;
+			transform.Find("PointLight").GetComponent<Light>().color = model.team==1?Color.red:Color.blue;
 		}
 		else 
 		{
