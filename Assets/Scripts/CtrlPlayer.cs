@@ -23,6 +23,7 @@ public class CtrlPlayer : MonoBehaviour
 	public Vector3 curSpeed=Vector3.zero;
 	TheCube.Direction playerDir=TheCube.Direction.NORTH;
 
+	public int team=-1;
 
 	void Awake()
 	{
@@ -50,7 +51,6 @@ public class CtrlPlayer : MonoBehaviour
 	public void initDaMutha()
 	{
 		GameObject player=gameObject;
-		player.name = "Me";
 		player.transform.parent=GameObject.Find("Face1").transform;
 		int [,] map=GameObject.Find("Face1").GetComponent<GenLevelCellular>().map;
 		if (map!=null)
@@ -74,11 +74,14 @@ public class CtrlPlayer : MonoBehaviour
 		if (networkView.isMine) 
 		{
 			gameObject.name="player_me_"+networkView.owner;
+			team=int.Parse(networkView.owner.ToString())%2+1;
 		}
 		else 
 		{
 			gameObject.name="player_"+msg.sender;
+			team=int.Parse(msg.sender.ToString())%2+1;
 		}
+
 	}
 	
 	void Update()
@@ -301,9 +304,9 @@ public class CtrlPlayer : MonoBehaviour
 		EventManager.onGotStunned("test");
 	}
 
-	public void onStuffPickup()
+	public void onStuffPickup(int team)
 	{
-		model.carryResources++;
+		model.carryResources+= this.team==team?1:3;
 		EventManager.onStuffPickup();
 
 		//full loaded

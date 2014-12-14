@@ -18,7 +18,7 @@ public class CtrlCollectible : MonoBehaviour
 		if (player!=null && player.canCollect())
 		{
 			//Brodcast event
-			player.onStuffPickup();
+			player.onStuffPickup(team);
 			
 			//Instantiate destroy particle
 			GameObject goSpark = (GameObject) GameObject.Instantiate(destroySpark);

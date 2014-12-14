@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviour
 	public GameObject button;
 	public Canvas ui;
 
-	int playerCount=1;
+	public int playerCount=0;
 
 	private void StartServer()
 	{
@@ -40,7 +40,7 @@ public class NetworkManager : MonoBehaviour
 		{
 			world.transform.GetChild(i).GetComponent<GenLevelCellular>().newMapGenerated();
 		}
-		playerCount++;
+
 	}
 
 	void OnMasterServerEvent(MasterServerEvent msEvent)
@@ -110,6 +110,7 @@ public class NetworkManager : MonoBehaviour
 
 	private void SpawnPlayer()
 	{
+		playerCount++;
 		GameObject player = (GameObject) Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0);
 
 
