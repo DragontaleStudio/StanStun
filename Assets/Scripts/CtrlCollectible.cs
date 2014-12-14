@@ -15,7 +15,7 @@ public class CtrlCollectible : MonoBehaviour
 	{
 		CtrlPlayer player = other.GetComponent<CtrlPlayer>();
 
-		if (player.canCollect())
+		if (player!=null && player.canCollect())
 		{
 			//Brodcast event
 			player.onStuffPickup();
@@ -23,7 +23,8 @@ public class CtrlCollectible : MonoBehaviour
 			//Instantiate destroy particle
 			GameObject goSpark = (GameObject) GameObject.Instantiate(destroySpark);
 			goSpark.transform.localPosition = gameObject.transform.position;
-			
+			goSpark.transform.rotation = gameObject.transform.rotation;
+
 			//Destroy collectible
 			Destroy(gameObject);
 		}
