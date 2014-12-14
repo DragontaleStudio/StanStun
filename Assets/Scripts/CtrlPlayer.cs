@@ -5,6 +5,8 @@ public class CtrlPlayer : MonoBehaviour
 {
 	public Player model;
 
+	public Animator animator;
+
 	//Sync values
 	private float lastSynchronizationTime = 0f;
 	private float syncDelay = 0f;
@@ -176,6 +178,14 @@ public class CtrlPlayer : MonoBehaviour
 		curSpeed=curSpeed*damping;
 		transform.Translate(curSpeed*Time.deltaTime);
 		setDirection();
+
+		if (curSpeed.magnitude > 0.3)
+		{
+			animator.SetBool("walking", true);
+		}else
+		{
+			animator.SetBool("walking", false);
+		}
 		
 		//		if (moved)
 		{
