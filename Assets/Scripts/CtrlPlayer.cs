@@ -44,6 +44,8 @@ public class CtrlPlayer : MonoBehaviour
 		initDaMutha();
 		cube=new TheCube();
 		daPlayer=gameObject;
+		GameObject.Find("UiManager").GetComponent<CtrlUiManager>().startCountDown=true;
+
 	}
 
 	
@@ -108,6 +110,9 @@ public class CtrlPlayer : MonoBehaviour
 				curSpeed=Vector2.zero;
 				InputMovement();
 			}
+
+			 
+		
 		}
 		else
 		{

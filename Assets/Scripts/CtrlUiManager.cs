@@ -26,9 +26,13 @@ public class CtrlUiManager : MonoBehaviour
 	public GameObject pie6;
 	public GameObject full;
 	public Text points;
+	public Text time;
 
 
 	public GameObject stunn;
+
+	public float timeCountdown=180f;
+	public bool startCountDown=false;
 
 	void Update()
 	{
@@ -36,6 +40,15 @@ public class CtrlUiManager : MonoBehaviour
 		{ 
 			goBack();
 		}
+
+		if (startCountDown)
+		{
+			timeCountdown-=Time.deltaTime;
+			EventManager.onGameFinish();
+		}
+
+		time.text=timeCountdown.ToString();
+
 
 //		if (model != null)
 //		{
